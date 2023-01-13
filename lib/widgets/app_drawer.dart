@@ -33,12 +33,18 @@ class _AppDrawerState extends State<AppDrawer> {
             title: const Text("Drawer"),
             automaticallyImplyLeading: false,
           ),
-          ListTile(leading: const Icon(Icons.home), title: const Text('Home'), onTap: () => _navigate('/', context), selected: _activeRoute == '/'),
           ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Elsewhere'),
-              onTap: () => _navigate('/elsewhere', context),
-              selected: _activeRoute == '/elsewhere'),
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
+            onTap: () => _navigate('/', context),
+            selected: _activeRoute == '/',
+          ),
+          ListTile(
+            leading: const Icon(Icons.person_off_outlined),
+            title: const Text('Users'),
+            onTap: () => _navigate('/users', context),
+            selected: _activeRoute == '/users',
+          ),
         ],
       ),
     );

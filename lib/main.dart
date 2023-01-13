@@ -1,6 +1,7 @@
+import 'package:dart_admin/screens/users_list_view.dart';
 import 'package:flutter/material.dart';
 
-import './screens/dashboard.dart';
+import 'screens/dashboard_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,9 +17,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Dashboard(),
+      home: const DashboardScreen(),
       routes: {
-        // ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
+        UserListView.routeName: (ctx) => const UserListView(),
         // CartScreen.routeName: (ctx) => CartScreen(),
         // OrdersScreen.routeName: (ctx) => OrdersScreen(),
         // UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
