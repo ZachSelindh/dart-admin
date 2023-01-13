@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppDrawer extends StatefulWidget with PreferredSizeWidget {
-  const AppDrawer({super.key});
+  final String activeRoute;
+
+  const AppDrawer({required this.activeRoute, super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(90);
@@ -11,12 +13,7 @@ class AppDrawer extends StatefulWidget with PreferredSizeWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  var _activeRoute = '/';
-
   void _navigate(String navTarget, BuildContext ctx) {
-    setState(() {
-      _activeRoute = navTarget;
-    });
     Navigator.of(ctx).pushReplacementNamed(navTarget);
     if (Navigator.canPop(ctx)) {
       Navigator.pop(ctx);
@@ -37,13 +34,13 @@ class _AppDrawerState extends State<AppDrawer> {
             leading: const Icon(Icons.home),
             title: const Text('Home'),
             onTap: () => _navigate('/', context),
-            selected: _activeRoute == '/',
+            selected: widget.activeRoute == '/',
           ),
           ListTile(
             leading: const Icon(Icons.person_off_outlined),
             title: const Text('Users'),
             onTap: () => _navigate('/users', context),
-            selected: _activeRoute == '/users',
+            selected: widget.activeRoute == '/users',
           ),
         ],
       ),

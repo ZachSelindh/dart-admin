@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../widgets/app_drawer.dart';
 
 class DashboardScreen extends StatelessWidget {
+  static String routeName = '/';
+
   const DashboardScreen({super.key});
 
   @override
@@ -11,7 +13,7 @@ class DashboardScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Dashboard'),
       ),
-      drawer: const AppDrawer(),
+      drawer: AppDrawer(activeRoute: DashboardScreen.routeName),
       body: const Center(
         child: Text('Dashboard'),
       ),

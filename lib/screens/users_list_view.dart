@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/app_drawer.dart';
+
 class UserListView extends StatelessWidget {
   static const routeName = '/users';
 
@@ -11,6 +13,7 @@ class UserListView extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Users"),
         ),
+        drawer: const AppDrawer(activeRoute: UserListView.routeName),
         body: Column(children: const [
           Card(
             child: Text('Users'),
