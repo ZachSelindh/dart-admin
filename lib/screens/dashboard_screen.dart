@@ -13,7 +13,7 @@ class DashboardScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Dashboard'),
       ),
-      drawer: AppDrawer(activeRoute: DashboardScreen.routeName),
+      drawer: AppDrawer(DashboardScreen.routeName),
       body: const Center(
         child: Text('Dashboard'),
       ),

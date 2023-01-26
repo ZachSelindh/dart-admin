@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import './app_drawer_nav_link.dart';
+
 class AppDrawer extends StatefulWidget with PreferredSizeWidget {
   final String activeRoute;
 
-  const AppDrawer({required this.activeRoute, super.key});
+  const AppDrawer(this.activeRoute, {super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(90);
@@ -13,12 +15,10 @@ class AppDrawer extends StatefulWidget with PreferredSizeWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  void _navigate(String navTarget, BuildContext ctx) {
-    Navigator.of(ctx).pushReplacementNamed(navTarget);
-    if (Navigator.canPop(ctx)) {
-      Navigator.pop(ctx);
-    }
-  }
+  static const List<Map<String, dynamic>> resourcesArray = [
+    {'name': '/', 'title': 'Home', 'icon': Icon(Icons.home)},
+    {'name': 'users', 'title': 'Users', 'icon': Icon(Icons.person_off_outlined)}
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +30,8 @@ class _AppDrawerState extends State<AppDrawer> {
             title: const Text("Drawer"),
             automaticallyImplyLeading: false,
           ),
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('Home'),
-            onTap: () => _navigate('/', context),
-            selected: widget.activeRoute == '/',
-          ),
-          ListTile(
-            leading: const Icon(Icons.person_off_outlined),
-            title: const Text('Users'),
-            onTap: () => _navigate('/users', context),
-            selected: widget.activeRoute == '/users',
+          ...resourcesArray.map(
+            (res) => AppDrawerNavLink(res['name'], res['title'], res['icon'], widget.activeRoute),
           ),
         ],
       ),

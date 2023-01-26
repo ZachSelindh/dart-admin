@@ -1,4 +1,4 @@
-import 'package:dart_admin/screens/users_list_view.dart';
+import 'package:dart_admin/screens/resource_list_view.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/dashboard_screen.dart';
@@ -19,11 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const DashboardScreen(),
       routes: {
-        UserListView.routeName: (ctx) => const UserListView(),
-        // CartScreen.routeName: (ctx) => CartScreen(),
-        // OrdersScreen.routeName: (ctx) => OrdersScreen(),
-        // UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
-        // EditProductScreen.routeName: (ctx) => EditProductScreen(),
+        ResourceListView.routeName: (ctx) => const ResourceListView(),
       },
     );
   }
