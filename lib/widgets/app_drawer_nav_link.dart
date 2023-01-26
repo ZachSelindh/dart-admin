@@ -4,11 +4,12 @@ class AppDrawerNavLink extends StatelessWidget {
   final String resourceName;
   final String resourceTitle;
   final Widget resourceIcon;
-  String activeRoute;
+  final String activeRoute;
 
-  AppDrawerNavLink(this.resourceName, this.resourceTitle, this.resourceIcon, this.activeRoute, {super.key});
+  const AppDrawerNavLink(this.resourceName, this.resourceTitle, this.resourceIcon, this.activeRoute, {super.key});
 
   void _navigateToListView(String resource, BuildContext ctx) {
+    print("[Resource] Navigation to:");
     print(resource);
     if (resource == '/') {
       Navigator.pushReplacementNamed(ctx, '/');
