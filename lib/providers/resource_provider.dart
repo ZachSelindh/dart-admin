@@ -1,5 +1,5 @@
 // import 'dart:convert';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/foundation.dart';
 // import 'package:http/http.dart' as http;
 import 'package:graphql/client.dart';
@@ -30,25 +30,30 @@ class Resource with ChangeNotifier {
   Resource();
 
   Future<void> fetchAndSetRecords() async {
-    final _httpLink = HttpLink(
-      'https://flutter-admin-apollo-express.onrender.com/graphql',
-    );
+    final graphqlUrl = dotenv.env['APOLLO_SERVER_URL'];
 
-    try {
-      final GraphQLClient client = GraphQLClient(
-        /// **NOTE** The default store is the InMemoryStore, which does NOT persist to disk
-        cache: GraphQLCache(),
-        link: _httpLink,
-      );
+    if (graphqlUrl != null) {
+      final httpLink = HttpLink(graphqlUrl);
+      try {
+        final GraphQLClient client = GraphQLClient(
+          /// **NOTE** The default store is the InMemoryStore, which does NOT persist to disk
+          cache: GraphQLCache(),
+          link: httpLink,
+        );
 
-      final QueryOptions options = QueryOptions(
-        document: gql(getPosts),
-      );
+        final QueryOptions options = QueryOptions(
+          document: gql(getPosts),
+        );
 
-      final QueryResult result = await client.query(options).catchError((err) => print(err));
-    } catch (err) {
-      print(err);
-      throw err;
+        final QueryResult result = await client.query(options);
+
+        if (result.hasException) {
+          print(result.exception.toString());
+        }
+      } catch (err) {
+        print(err);
+        throw err;
+      }
     }
 
     // try {
