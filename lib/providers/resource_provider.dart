@@ -1,7 +1,5 @@
-// import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/foundation.dart';
-// import 'package:http/http.dart' as http;
 import 'package:graphql/client.dart';
 
 const String getPosts = r'''
