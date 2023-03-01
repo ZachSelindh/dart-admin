@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
-// import '../providers/resource_provider.dart';
+import '../providers/resource_provider.dart';
 
 import '../widgets/app_drawer.dart';
 
@@ -10,25 +10,39 @@ class ResourceListView extends StatelessWidget {
 
   const ResourceListView({super.key});
 
-  // Future<void> _refreshRecords(BuildContext context) async {
-  //   await Provider.of<Resource>(context, listen: false).fetchAndSetRecords();
-  // }
-
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments;
 
-    print(args);
-
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Users"),
-        ),
-        drawer: const AppDrawer(ResourceListView.routeName),
-        body: Column(children: const [
-          Card(
-            child: Text('Users'),
-          ),
-        ]));
+      appBar: AppBar(
+        title: const Text("Users"),
+      ),
+      drawer: const AppDrawer(ResourceListView.routeName),
+      body: FutureBuilder(
+        future: Provider.of<Resource>(context, listen: false).fetchAndSetRecords(),
+        builder: (ctx, snapshot) => snapshot.connectionState == ConnectionState.waiting
+            ? const Center(child: CircularProgressIndicator())
+            : Consumer<Resource>(
+                child: const Center(
+                  child: Text('No records yet!'),
+                ),
+                builder: (ctx, resourceRecords, ch) => resourceRecords.records.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: resourceRecords.records.length,
+                        itemBuilder: (cntx, index) => ListTile(
+                          // leading: CircleAvatar(
+                          //   backgroundImage: FileImage(greatPlaces.records[index].image),
+                          // ),
+                          title: Text(resourceRecords.records[index].content),
+                          // subtitle: Text(greatPlaces.items[index].location!.address as String),
+                          // onTap: () {
+                          //   Navigator.of(context).pushNamed(PlaceDetailScreen.routeName, arguments: greatPlaces.items[index].id);
+                          // },
+                        ),
+                      )
+                    : ch!),
+      ),
+    );
   }
 }

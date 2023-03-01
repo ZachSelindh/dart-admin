@@ -1,7 +1,10 @@
-import 'package:dart_admin/screens/resource_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'providers/resource_provider.dart';
 
 import 'screens/dashboard_screen.dart';
+import 'screens/resource_list_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,15 +15,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ChangeNotifierProvider.value(
+      value: Resource(),
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const DashboardScreen(),
+        routes: {
+          ResourceListView.routeName: (ctx) => const ResourceListView(),
+        },
       ),
-      home: const DashboardScreen(),
-      routes: {
-        ResourceListView.routeName: (ctx) => const ResourceListView(),
-      },
     );
   }
 }
