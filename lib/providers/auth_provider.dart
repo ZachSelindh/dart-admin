@@ -28,37 +28,9 @@ class Auth with ChangeNotifier {
     return _userId;
   }
 
-  final String apiKey = 'AIzaSyAAuzZXmWzB9kA0TJl3EdpRZGfIIWkSNik';
-
   Future<void> _authenticate(String email, String password, String urlSegment) async {
-    final url = Uri.parse('https://identitytoolkit.googleapis.com/v1/accounts:$urlSegment?key=$apiKey');
-
     try {
-      final response = await http.post(
-        url,
-        body: json.encode(
-          {
-            'email': email,
-            'password': password,
-            'returnSecureToken': true,
-          },
-        ),
-      );
-
-      final responseData = json.decode(response.body);
-
-      if (responseData['error'] != null) {
-        throw HttpException(responseData['error']['message']);
-      }
-      _token = responseData['idToken'];
-      _userId = responseData['localId'];
-      _expiryDate = DateTime.now().add(
-        Duration(
-          seconds: int.parse(
-            responseData['expiresIn'],
-          ),
-        ),
-      );
+      // Perform login at Graphql
       _autoLogout();
       notifyListeners();
       final prefs = await SharedPreferences.getInstance();
@@ -66,7 +38,7 @@ class Auth with ChangeNotifier {
       final userData = json.encode({'token': _token, "userId": _userId, 'expiryDate': _expiryDate.toIso8601String()});
       prefs.setString('userData', userData);
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 
